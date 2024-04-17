@@ -1,16 +1,20 @@
 ﻿namespace SampleAPI.ToRefactor;
 
+/// <summary>
+/// This class should be refactored to follow the SOLID principles and
+/// Clean code principles
+/// </summary>
 public class MessyClass
 {
-    private TotoData _t;
+    private FooRepository _t;
 
     public MessyClass()
     {
-        _t = new TotoData();
+        _t = new FooRepository();
     }
 
     /// <summary>
-    /// This method should write some financial data into a file named MySampleFinancial
+    /// This method should write some financial data into a MySampleFinancial file
     /// and save the data into the Db via the Repo
     /// 
     /// If we are not allowed to do this, then throw exception
@@ -24,29 +28,30 @@ public class MessyClass
     {
         if (bCanDoThis)
         {
-            File.AppendAllTextAsync(@"C:\tempMessyClassTest\MySampleFinancial.txt", "id, profile_type, amount, year, fullname");
+            File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.txt", "id, profile_type, amount, year, fullname");
 
-            var results = _t.AccessDataSample();
+            var results = _t.Get();
 
-            // TODO > replace with SampleDto
             var list = new List<dynamic>();
 
             foreach (var result in results)
             {
-                if (result.personProfileType == personProfileType)
+                if (result.ProfileType == "type1")
                 {
-                    list.Add(result);
+                    Console.WriteLine("Do something");
+                }
+                else
+                if (result.ProfileType == "type2")
+                {
+                    Console.WriteLine("Do something^else");
                 }
                 else
                 {
-                    if(list.Any(x => x.f == f && x.y == y && x.name == FULLNAME))
-                        list.Add(result);
-                    else
-                        throw new Exception("cannot add to the file");
+                    throw new Exception("Unknown profile type");
                 }
             }
 
-            foreach (dynamic o in list)
+            foreach (var o in list)
             {
                 File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.txt", $"{o.id},{o.personProfileType},{o.f},{o.y},{o.name}, {FULLNAME}");
             }
@@ -55,27 +60,31 @@ public class MessyClass
         {
             throw new Exception("Cannot do this");
         }
-
     }
 }
 
-public class TotoData
+public class FooRepository
 {
-    public IEnumerable<dynamic> AccessDataSample()
+    public IEnumerable<Foo> Get(int? id = null)
     {
-        yield return new { id = 1, personProfileType = "type1", f = 123f, y = 1999, name = "Doe1" };
-        yield return new { id = 2, personProfileType = "type1", f = 124f, y = 1995, name = "Doe2" };
-        yield return new { id = 3, personProfileType = "type2", f = 125f, y = 1998, name = "Doe3" };
-        yield return new { id = 4, personProfileType = "type2", f = 126f, y = 1999, name = "Doe4" };
-        yield return new { id = 5, personProfileType = "type2", f = 127f, y = 1997, name = "Doe5" };
+        if(id != null && id.HasValue)
+            yield return new Foo { Id = id.Value, ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1,1), Name = "Doe1" };
+        else
+        {
+            yield return new Foo{ Id = 1, ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe1" };
+            yield return new Foo{ Id = 2, ProfileType = "type1", Amount = 124f, BirthdayDate = new DateTime(1995, 1, 1), Name = "Doe2" };
+            yield return new Foo{ Id = 3, ProfileType = "type2", Amount = 125f, BirthdayDate = new DateTime(1998, 1, 1), Name = "Doe3" };
+            yield return new Foo{ Id = 4, ProfileType = "type2", Amount = 126f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe4" };
+            yield return new Foo{ Id = 5, ProfileType = "type2", Amount = 127f, BirthdayDate = new DateTime(1997, 1, 1), Name = "Doe5" };
+        }
     }
 }
 
-public class SampleDto
+public class Foo
 {
     public int Id { get; set; }
     public string ProfileType { get; set; }
     public float Amount { get; set; }
-    public int Year { get; set; }
+    public DateTime BirthdayDate { get; set; }
     public string Name { get; set; }
 }

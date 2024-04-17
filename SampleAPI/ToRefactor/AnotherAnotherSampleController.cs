@@ -1,24 +1,23 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SampleAPI.ToRefactor
+namespace SampleAPI.ToRefactor;
+
+[ApiController]
+[Route("[controller]")]
+public class AnotherAnotherSampleController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class AnotherAnotherSampleController : ControllerBase
+    private readonly IMediator _mediator;
+
+    public AnotherAnotherSampleController(IMediator mediator)
     {
-        private readonly IMediator _mediator;
-
-        public AnotherAnotherSampleController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        _mediator = mediator;
+    }
 
 
-        [HttpPost]
-        public IActionResult Create([FromBody] dynamic request)
-        {
-            throw new NotImplementedException();
-        }
+    [HttpPost]
+    public IActionResult Create([FromBody] dynamic request)
+    {
+        throw new NotImplementedException();
     }
 }
