@@ -1,8 +1,9 @@
 # CdmTestCase
 
-> Refacoring MessyClass
-
-> Test Messy class
+> Refactoring and testing MessyClass
+- Following SOLID principles
+- How to ensure quality?
+ 
 
 > TDD
  - Add method SetSalary (depending on the current age) with the following business rules 
