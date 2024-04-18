@@ -43,7 +43,7 @@ public class MessyClass
                 else
                 if (result.ProfileType == "type2")
                 {
-                    Console.WriteLine("Do something^else");
+                    Console.WriteLine("Do something else");
                 }
                 else
                 {
