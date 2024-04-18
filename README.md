@@ -1,7 +1,9 @@
 # CdmTestCase
 
 > Refacoring MessyClass
+
 > Test Messy class
+
 > TDD
  - Add method SetSalary (depending on the current age) with the following business rules 
  - Rename Foo => Person
