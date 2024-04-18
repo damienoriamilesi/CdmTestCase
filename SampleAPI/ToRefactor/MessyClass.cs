@@ -25,7 +25,6 @@ public class MessyClass
             {
                 if (result.ProfileType == "type1")
                 {
-                    var o = result;
                     File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial_1.csv", $"{Guid.NewGuid()},{o2},{f},{y},{name}, {FULLNAME}");
                 }
                 else 
@@ -43,7 +42,11 @@ public class MessyClass
         }
     }
 
-    public string GetCurrentUser() => "CDM\\JohnDoe";
+    /// <summary>
+    /// Get roles from AD or IAM
+    /// </summary>
+    /// <returns></returns>
+    public string[] GetCurrentUserRoles() => new[]{"Admin"};
 
     public void LogError() { Console.WriteLine("Error"); }
 
