@@ -61,6 +61,18 @@ public class MessyClass
             throw new Exception("Cannot do this");
         }
     }
+
+    public IEnumerable<Foo> Get()
+    {
+        yield return new Foo
+        {
+            Id = 42,
+            Amount = 123456,
+            BirthdayDate = new DateTime(2014, 04, 10),
+            Name = "CDM",
+            ProfileType = "type1"
+        };
+    }
 }
 
 public class FooRepository

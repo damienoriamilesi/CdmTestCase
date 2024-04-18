@@ -66,7 +66,3 @@ public class FakeGenerator
         }
     }
 }
-
-/*
- * Implement
- */

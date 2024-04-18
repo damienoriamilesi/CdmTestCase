@@ -8,14 +8,9 @@ namespace SampleAPI.Features.CreateSampleObject
     {
         public Task<CreateSampleObjectResponse> Handle(CreateSampleObjectRequest request, CancellationToken cancellationToken)
         {
-            var response = new CreateSampleObjectResponse(new Foo
-            {
-                Id = 42, 
-                Amount = 123456,
-                BirthdayDate = new DateTime(2014,04,10),
-                Name = "CDM",
-                ProfileType = "type1"
-            });
+            var repo = new MessyClass().Get();
+
+            var response = new CreateSampleObjectResponse(repo.FirstOrDefault());
 
             return Task.FromResult(response);
         }
