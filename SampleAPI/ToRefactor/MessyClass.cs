@@ -24,11 +24,12 @@ public class MessyClass
     /// <param name="f">amount to pay</param>
     /// <param name="y">Year</param>
     /// <returns></returns>
-    public async Task DoSomethingSpecial(bool bCanDoThis, string personProfileType, float f, int y, string FULLNAME)
+    public async Task DoSomethingSpecial(bool bCanDoThis, string o2, float f, int y, string FULLNAME)
     {
         if (bCanDoThis)
         {
-            File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.txt", "id, profile_type, amount, year, fullname");
+            File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
+
 
             var results = _t.Get();
 
@@ -53,7 +54,7 @@ public class MessyClass
 
             foreach (var o in list)
             {
-                File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.txt", $"{o.id},{o.personProfileType},{o.f},{o.y},{o.name}, {FULLNAME}");
+                File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", $"{o.id},{o.personProfileType},{o.f},{o.y},{o.name}, {FULLNAME}");
             }
         }
         else
@@ -73,6 +74,13 @@ public class MessyClass
             ProfileType = "type1"
         };
     }
+    
+    // TODO > Maybe we'll need this method someday
+    //public IEnumerable<Foo> Get(dynamic filter)
+    //{
+    //    var list = Get();
+    //    return list.Where(x => x.Name.Contains(filter.Name));
+    //}
 }
 
 public class FooRepository
