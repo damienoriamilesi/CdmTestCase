@@ -2,6 +2,9 @@ using SampleAPI.Features.CreatePerson;
 
 namespace SampleAPI.ToRefactor;
 
+/// <summary>
+/// Add Interface Segregation Interface
+/// </summary>
 public class PersonRepository
 {
     private readonly PersonDbContext _dbContext;
