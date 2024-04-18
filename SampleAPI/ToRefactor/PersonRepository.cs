@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using SampleAPI.Controllers;
 using SampleAPI.Features.CreatePerson;
 
 namespace SampleAPI.ToRefactor;
@@ -20,13 +18,15 @@ public class PersonRepository
     
     public void SendEmail() { Console.WriteLine("Email Sent!!"); }
 
-    public bool IsAuthenticated()
-    {
-        return true;
-    }
-
     public void AddEmployee(Employee employee)
     {
         _dbContext.Employees.Add(employee);
+    }
+
+    public Employee[] Get(Guid? id = null)
+    {
+        var employees = _dbContext.Employees;
+        if (!id.HasValue) return employees.ToArray();
+        return employees.Where(x => x.Id == id).ToArray();
     }
 }
