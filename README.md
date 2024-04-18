@@ -5,6 +5,11 @@
 - records: purpose?
 - Security : IDP / OAuth / IAM
 
+> Debug
+
+- make the project build
+- make the endpoint GET work
+
 > Refactoring MessyClass
 
 - SOLID

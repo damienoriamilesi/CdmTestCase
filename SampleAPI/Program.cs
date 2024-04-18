@@ -1,6 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using SampleAPI.Features.CreatePerson;
-using SampleAPI.ToRefactor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +10,6 @@ builder.Services.AddDbContext<PersonDbContext>(options =>
     options.UseSqlite("Data Source=SampleApi.db")
     );
 
-builder.Services.AddScoped<PersonRepository>();
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -21,7 +17,6 @@ var filePath = Path.Combine(AppContext.BaseDirectory, "SampleAPI.xml");
 builder.Services.AddSwaggerGen(cfg => cfg.IncludeXmlComments(filePath, true));
 
 var app = builder.Build();
-
 
 // Ensure database is created during application startup
 using (var scope = app.Services.CreateScope())
