@@ -30,6 +30,7 @@ public class MessyClass
         {
             File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
 
+
             var results = _t.Get();
 
             var list = new List<dynamic>();
