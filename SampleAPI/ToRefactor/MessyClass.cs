@@ -1,5 +1,4 @@
 ﻿using SampleAPI.Controllers;
-using SampleAPI.Features.CreateSampleObject;
 
 namespace SampleAPI.ToRefactor;
 
@@ -9,13 +8,6 @@ namespace SampleAPI.ToRefactor;
 /// </summary>
 public class MessyClass
 {
-    private PersonRepository _t;
-
-    public MessyClass()
-    {
-        _t = new PersonRepository();
-    }
-
     /// <summary>
     /// This method should write some financial data into a MySampleFinancial file
     /// and save the data into the Db via the Repo
@@ -27,16 +19,12 @@ public class MessyClass
     /// <param name="f">amount to pay</param>
     /// <param name="y">Year</param>
     /// <returns></returns>
-    public async Task DoSomethingSpecial(bool bCanDoThis, string o2, float f, int y, string FULLNAME)
+    public Task Process(bool bCanDoThis, string o2, float f, int y, string FULLNAME)
     {
-        /if(UserAuthenticated)
-
-        if (bCanDoThis)
+        if (UserAuthenticated)
         {
-            File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
-
-
-            var results = _t.Get();
+            // Get Some data
+            var results = TestFixture.BuildEmployees();
 
             var list = new List<dynamic>();
 
@@ -53,10 +41,13 @@ public class MessyClass
                 }
                 else
                 {
-                    throw new Exception("Unknown profile type");
+                    var ex = new Exception("Unknown profile type");
+                    File.WriteAllText(@"C:\something\Error.txt", ex.ToString());
+                    throw ex;
                 }
             }
-
+            
+            File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
             foreach (var o in list)
             {
                 File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", $"{o.id},{o.personProfileType},{o.f},{o.y},{o.name}, {FULLNAME}");
@@ -66,18 +57,11 @@ public class MessyClass
         {
             throw new Exception("Cannot do this");
         }
+
+        return Task.CompletedTask;
     }
 
-    public IEnumerable<Employee> Get()
-    {
-        yield return new Employee
-        {
-            Amount = 123456,
-            BirthdayDate = new DateTime(2014, 04, 10),
-            Name = "CDM",
-            ProfileType = "type1"
-        };
-    }
+    public bool UserAuthenticated => true;
     
     // TODO > Maybe we'll need this method someday
     //public IEnumerable<Foo> Get(dynamic filter)
@@ -85,21 +69,4 @@ public class MessyClass
     //    var list = Get();
     //    return list.Where(x => x.Name.Contains(filter.Name));
     //}
-}
-
-public class PersonRepository
-{
-    public IEnumerable<Employee> Get(string name = null)
-    {
-        if(name is not null)
-            yield return new Employee { ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1,1), Name = "Doe1" };
-        else
-        {
-            yield return new Employee{ ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe1" };
-            yield return new Employee{ ProfileType = "type1", Amount = 124f, BirthdayDate = new DateTime(1995, 1, 1), Name = "Doe2" };
-            yield return new Employee{ ProfileType = "type2", Amount = 125f, BirthdayDate = new DateTime(1998, 1, 1), Name = "Doe3" };
-            yield return new Employee{ ProfileType = "type2", Amount = 126f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe4" };
-            yield return new Employee { ProfileType = "type2", Amount = 127f, BirthdayDate = new DateTime(1997, 1, 1), Name = "Doe5" };
-        }
-    }
 }
