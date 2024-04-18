@@ -1,4 +1,7 @@
-﻿namespace SampleAPI.ToRefactor;
+﻿using SampleAPI.Controllers;
+using SampleAPI.Features.CreateSampleObject;
+
+namespace SampleAPI.ToRefactor;
 
 /// <summary>
 /// This class should be refactored to follow the SOLID principles and
@@ -6,11 +9,11 @@
 /// </summary>
 public class MessyClass
 {
-    private FooRepository _t;
+    private PersonRepository _t;
 
     public MessyClass()
     {
-        _t = new FooRepository();
+        _t = new PersonRepository();
     }
 
     /// <summary>
@@ -26,6 +29,8 @@ public class MessyClass
     /// <returns></returns>
     public async Task DoSomethingSpecial(bool bCanDoThis, string o2, float f, int y, string FULLNAME)
     {
+        /if(UserAuthenticated)
+
         if (bCanDoThis)
         {
             File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
@@ -63,11 +68,10 @@ public class MessyClass
         }
     }
 
-    public IEnumerable<Foo> Get()
+    public IEnumerable<Employee> Get()
     {
-        yield return new Foo
+        yield return new Employee
         {
-            Id = 42,
             Amount = 123456,
             BirthdayDate = new DateTime(2014, 04, 10),
             Name = "CDM",
@@ -83,28 +87,19 @@ public class MessyClass
     //}
 }
 
-public class FooRepository
+public class PersonRepository
 {
-    public IEnumerable<Foo> Get(int? id = null)
+    public IEnumerable<Employee> Get(string name = null)
     {
-        if(id != null && id.HasValue)
-            yield return new Foo { Id = id.Value, ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1,1), Name = "Doe1" };
+        if(name is not null)
+            yield return new Employee { ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1,1), Name = "Doe1" };
         else
         {
-            yield return new Foo{ Id = 1, ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe1" };
-            yield return new Foo{ Id = 2, ProfileType = "type1", Amount = 124f, BirthdayDate = new DateTime(1995, 1, 1), Name = "Doe2" };
-            yield return new Foo{ Id = 3, ProfileType = "type2", Amount = 125f, BirthdayDate = new DateTime(1998, 1, 1), Name = "Doe3" };
-            yield return new Foo{ Id = 4, ProfileType = "type2", Amount = 126f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe4" };
-            yield return new Foo{ Id = 5, ProfileType = "type2", Amount = 127f, BirthdayDate = new DateTime(1997, 1, 1), Name = "Doe5" };
+            yield return new Employee{ ProfileType = "type1", Amount = 123f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe1" };
+            yield return new Employee{ ProfileType = "type1", Amount = 124f, BirthdayDate = new DateTime(1995, 1, 1), Name = "Doe2" };
+            yield return new Employee{ ProfileType = "type2", Amount = 125f, BirthdayDate = new DateTime(1998, 1, 1), Name = "Doe3" };
+            yield return new Employee{ ProfileType = "type2", Amount = 126f, BirthdayDate = new DateTime(1999, 1, 1), Name = "Doe4" };
+            yield return new Employee { ProfileType = "type2", Amount = 127f, BirthdayDate = new DateTime(1997, 1, 1), Name = "Doe5" };
         }
     }
-}
-
-public class Foo
-{
-    public int Id { get; set; }
-    public string ProfileType { get; set; }
-    public float Amount { get; set; }
-    public DateTime BirthdayDate { get; set; }
-    public string Name { get; set; }
 }
