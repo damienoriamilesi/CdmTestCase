@@ -6,18 +6,29 @@ using SampleAPI.Features.GetPersonById;
 
 namespace SampleAPI.Controllers;
 
+/// <summary>
+/// API to manage Persons in a company
+/// </summary>
 [ApiController]
 [Route("[controller]")]
 public class PersonsController : ControllerBase
 {
     private readonly IMediator _mediator;
 
+    /// <summary>
+    /// MediatR injection
+    /// </summary>
+    /// <param name="mediator"></param>
     public PersonsController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    // Could be a Command instead but don't mind
+    /// <summary>
+    ///  Could be a Command instead but don't mind
+    /// </summary>
+    /// <param name="request"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreatePersonRequest request)
     {

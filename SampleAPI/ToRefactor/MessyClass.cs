@@ -1,4 +1,4 @@
-﻿using SampleAPI.Controllers;
+﻿using SampleAPI.Features.CreatePerson;
 
 namespace SampleAPI.ToRefactor;
 
@@ -14,30 +14,24 @@ public class MessyClass
     /// 
     /// If we are not allowed to do this, then throw exception
     /// </summary>
-    /// <param name="bCanDoThis">some non objective param</param>
-    /// <param name="personProfileType"></param>
-    /// <param name="f">amount to pay</param>
-    /// <param name="y">Year</param>
-    /// <returns></returns>
-    public Task Process(bool bCanDoThis, string o2, float f, int y, string FULLNAME)
+    public void Save_Item(bool bCanDoThis, string o2, float f, int y, string name, string FULLNAME)
     {
-        if (UserAuthenticated)
+        // Get Some data
+        var results = TestFixture.BuildEmployees();
+        
+        foreach (var result in results)
         {
-            // Get Some data
-            var results = TestFixture.BuildEmployees();
-
-            var list = new List<dynamic>();
-
-            foreach (var result in results)
+            if(result.BirthdayDate.Year < 2000)
             {
                 if (result.ProfileType == "type1")
                 {
-                    Console.WriteLine("Do something");
+                    var o = result;
+                    File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial_1.csv", $"{Guid.NewGuid()},{o2},{f},{y},{name}, {FULLNAME}");
                 }
-                else
+                else 
                 if (result.ProfileType == "type2")
                 {
-                    Console.WriteLine("Do something else");
+                    File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial_2.csv", $"{Guid.NewGuid()},{o2},{f},{y},, {FULLNAME}");
                 }
                 else
                 {
@@ -46,23 +40,19 @@ public class MessyClass
                     throw ex;
                 }
             }
-            
-            File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
-            foreach (var o in list)
-            {
-                File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", $"{o.id},{o.personProfileType},{o.f},{o.y},{o.name}, {FULLNAME}");
-            }
         }
-        else
-        {
-            throw new Exception("Cannot do this");
-        }
-
-        return Task.CompletedTask;
     }
 
-    public bool UserAuthenticated => true;
-    
+    public string GetCurrentUser() => "CDM\\JohnDoe";
+
+    public void LogError() { Console.WriteLine("Error"); }
+
+    public void SendEmail()
+    {
+        File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
+        //Send
+    }
+
     // TODO > Maybe we'll need this method someday
     //public IEnumerable<Foo> Get(dynamic filter)
     //{

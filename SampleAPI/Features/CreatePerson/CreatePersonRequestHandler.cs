@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using SampleAPI.ToRefactor;
 
 namespace SampleAPI.Features.CreatePerson
@@ -11,15 +10,19 @@ namespace SampleAPI.Features.CreatePerson
     /// </summary>
     public class CreatePersonRequestHandler : IRequestHandler<CreatePersonRequest, CreatePersonResponse>
     {
+        private readonly PersonRepository _personRepository;
+
+        public CreatePersonRequestHandler(PersonRepository personRepository)
+        {
+            _personRepository = personRepository;
+        }
         public Task<CreatePersonResponse> Handle(CreatePersonRequest request, CancellationToken cancellationToken)
         {
-            var repository = new PersonRepository(new PersonDbContext(new DbContextOptions<DbContext>()));
-
             if (request.PersonType == Enums.PersonTypes.Employee)
             {
                 var employee = new Employee();
-                repository.AddEmployee(employee);
-                repository.Save();
+                _personRepository.AddEmployee(employee);
+                _personRepository.Save();
                 
                 var response = new CreatePersonResponse(employee);
                 return Task.FromResult(response);
@@ -38,7 +41,7 @@ namespace SampleAPI.Features.CreatePerson
         public Guid Id { get; set; }
 
         public string Name { get; set; }
-        public virtual decimal Salary => 50000;
+        public virtual decimal GetSalary => 50000;
     }
     
     /// <inheritdoc />
