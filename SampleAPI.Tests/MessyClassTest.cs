@@ -8,6 +8,6 @@ public class MessyClassTest
     public async Task Test1()
     {
         var messyClass = new MessyClass();
-        await messyClass.DoSomethingSpecial(true, "type2", 12, 1998, "John");
+        messyClass.Process(true, "type2", 12, 1998, "John");
     }
 }
