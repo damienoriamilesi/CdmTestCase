@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SampleAPI.ToRefactor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ builder.Services.AddDbContext<PersonDbContext>(options =>
     //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     options.UseSqlite("Data Source=SampleApi.db")
     );
+
+builder.Services.AddScoped<PersonRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
