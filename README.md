@@ -3,7 +3,7 @@
 > Refacoring MessyClass
 > Test Messy class
 > TDD
- - Add method SetSalaryDependingOnAge with the following business rules 
+ - Add method SetSalary (depending on the current age) with the following business rules 
  - Rename Foo => Person
  - If person's age > 18
    - Compute salary => 60000
