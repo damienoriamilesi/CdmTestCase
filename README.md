@@ -15,9 +15,16 @@
 - SOLID
 - Replace Hard coded values
 - Naming conventions
-- Dependency => Notification, Logs, 
+- Dependency => Notification, Logs
+- foreach => filter on following IF
+- Add Enum for ProfileTypes
 - foreach => Use polymorphism (Factory, Strategy)
 - Parallel.ForEach vs Task.WhenAll
+
+> CreatePeronRequestHandler
+- Add Manager
+
+- Add Director
 
 > TDD: Employee, Manager, Director classes
  - Add method GetSalary (depending on the current age) with the following business rules

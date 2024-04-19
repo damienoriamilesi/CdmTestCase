@@ -27,6 +27,9 @@ namespace SampleAPI.Features.CreatePerson
                 var response = new CreatePersonResponse(employee);
                 return Task.FromResult(response);
             }
+            //Add Manager
+
+            //Add Director
 
             throw new Exception("Unknown type of person");
         }
@@ -41,14 +44,15 @@ namespace SampleAPI.Features.CreatePerson
         public Guid Id { get; set; }
 
         public string Name { get; set; }
+
         public virtual decimal GetSalary => 50000;
     }
     
     /// <inheritdoc />
     public class Employee : Person
     {
-        public string ProfileType { get; set; }
-        public float Amount { get; set; }
+        public string Position { get; set; }
+        public float EmployeeNumber { get; set; }
         public DateTime BirthdayDate { get; set; }
     }
 }
