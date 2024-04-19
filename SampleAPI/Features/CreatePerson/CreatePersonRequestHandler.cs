@@ -44,8 +44,6 @@ namespace SampleAPI.Features.CreatePerson
         public Guid Id { get; set; }
 
         public string Name { get; set; }
-
-        public virtual decimal GetSalary => 50000;
     }
     
     /// <inheritdoc />
