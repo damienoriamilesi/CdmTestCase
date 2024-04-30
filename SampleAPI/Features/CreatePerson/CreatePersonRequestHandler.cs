@@ -38,12 +38,19 @@ namespace SampleAPI.Features.CreatePerson
     public record CreatePersonRequest(Enums.PersonTypes PersonType) : IRequest<CreatePersonResponse>;
     public record CreatePersonResponse(Person Person);
 
+
+
+
+
     public abstract class Person
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]       
         public Guid Id { get; set; }
 
         public string Name { get; set; }
+
+        public virtual int GetSalary() => 60000;
+
     }
     
     /// <inheritdoc />
@@ -53,4 +60,19 @@ namespace SampleAPI.Features.CreatePerson
         public float EmployeeNumber { get; set; }
         public DateTime BirthdayDate { get; set; }
     }
+
+    public class Manager : Person
+    {
+        public override int GetSalary()
+        {
+            return base.GetSalary() + 6000;
+        }
+    }
+
+    public class Director : Person 
+    {
+        override int GetSalary() => base.GetSalary() + 12000;
+
+    }
+
 }

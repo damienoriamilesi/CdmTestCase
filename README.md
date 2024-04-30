@@ -27,7 +27,7 @@
 - Add Director
 
 > TDD: Employee, Manager, Director classes
- - Add method GetSalary (depending on the current age) with the following business rules
+ - Add method SetSalary (depending on the current age) with the following business rules
  - If person's age > 18
    - Compute salary => 60000
  - If person's age > 18 and < 40

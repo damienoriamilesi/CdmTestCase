@@ -13,31 +13,18 @@ public class MessyClass
     /// If we are not allowed to do this, then throw exception
     ///
     /// </summary>
-    public void Process_Item(bool bCanDoThis, string o2, float f, int y, string name, string FULLNAME)
+    public async Task Process_Item(bool bCanDoThis, string o2, float f, int y, string name, string FULLNAME)
     {
+        // TODO > nested IF?
+        // TODO > 2000 => Variable
+        // TODO > 
         // Get Some data
-        var results = TestFixture.BuildEmployees();
-        
-        foreach (var result in results)
+        var employees = TestFixture.BuildEmployees();
+
+
+        foreach (var employee in employees)
         {
-            if(result.BirthdayDate.Year < 2000)
-            {
-                if (result.Position == "type1")
-                {
-                    // Assume we do something for this type of position
-                }
-                else 
-                if (result.Position == "type2")
-                {
-                    // Assume we do somethingelse  for this type of position
-                }
-                else
-                {
-                    var ex = new Exception("Unknown profile type");
-                    File.WriteAllText(@"C:\something\Error.txt", ex.ToString());
-                    throw ex;
-                }
-            }
+            var result = employee.GetSalary();
         }
     }
 
@@ -48,30 +35,36 @@ public class MessyClass
             Directory.CreateDirectory(directoryPath);
         }
 
-        File.WriteAllText(Path.Combine(directoryPath, fileName), ToString());
+        // TODO > Check filename : not empty, has an extension
+        File.WriteAllText(Path.Combine(directoryPath, fileName), "42".ToString());
     }
 
     /// <summary>
     /// Get roles from AD or IAM
     /// </summary>
     /// <returns></returns>
-    public string[] GetCurrentUserRoles() => new[]{"Admin"};
+    // TODO > Replace "Admin" -> Add to settings / add to Constant
+    // TODO > Add to Auth class
+    public string[] GetCurrentUserRoles() => new[] { "Admin" };
 
 
+    // TODO > add ex.Message
+    public void LogError(Exception ex)
+    {
+        Console.WriteLine("Error occured: " + ex.Message);
+        //throw; 
+    }
 
-    public void LogError() { Console.WriteLine("Error"); }
-    public void LogInformation(bool bCanDoThis, string o2, float f, int y, string name, string FULLNAME) { Console.WriteLine($"Info : {Guid.NewGuid()},{o2},{f},{y},{name}, {FULLNAME}"); }
+    // TODO > Too many params / Params don't have any sense
+    // TODO > What are we supposed to log? => 
+    public void LogInformation(bool canDoThis, string city, float taxAmount, int cardNumber, string firstName, string fullname)
+    {
+        //Console.WriteLine($"Info : {Guid.NewGuid()},{o2},{f},{y},{name}, {fullname}");
+    }
 
     public void SendEmail()
     {
         File.AppendAllTextAsync(@"C:\temp\MessyClassTest\MySampleFinancial.csv", "id, profile_type, amount, year, fullname");
         //Send
     }
-
-    // TODO > Maybe we'll need this method someday
-    //public IEnumerable<Foo> Get(dynamic filter)
-    //{
-    //    var list = Get();
-    //    return list.Where(x => x.Name.Contains(filter.Name));
-    //}
 }
